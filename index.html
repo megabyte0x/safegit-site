@@ -229,7 +229,7 @@
         <a href="#why">Why</a>
         <a href="#install">Install</a>
         <a href="#flow">Flow</a>
-        <a href="#production">Production</a>
+        <a href="https://github.com/agent-cortex/safegit" target="_blank" rel="noreferrer">CLI repo</a>
         <a class="btn" href="#quickstart">Quickstart</a>
       </div>
     </div>
@@ -243,6 +243,7 @@
       <div class="hero-actions">
         <a class="btn primary" href="#quickstart">Run the flow</a>
         <a class="btn" href="#architecture">See architecture</a>
+        <a class="btn" href="https://github.com/agent-cortex/safegit" target="_blank" rel="noreferrer">GitHub CLI repo</a>
       </div>
 
       <div class="terminal-card" aria-label="SafeGit command preview">
@@ -302,8 +303,8 @@
         <div class="grid two">
           <div class="card">
             <h3>Local CLI install</h3>
-            <div class="copy-row"><button class="copy">copy</button><pre><code># Until the package is published, install from the SafeGit source directory.
-cd /path/to/safegit
+            <div class="copy-row"><button class="copy">copy</button><pre><code>git clone https://github.com/agent-cortex/safegit.git
+cd safegit
 pnpm install
 pnpm link --global</code></pre></div>
           </div>
@@ -338,7 +339,7 @@ docker compose up --build</code></pre></div>
             <div>
               <h3>Export the DB URL for CLI commands</h3>
               <p>The CLI and server must point at the same database.</p>
-              <div class="copy-row"><button class="copy">copy</button><pre><code>export SAFEGIT_DATABASE_URL='postgres://safegit:REPLACE_ME@127.0.0.1:5432/safegit'</code></pre></div>
+              <div class="copy-row"><button class="copy">copy</button><pre><code>export SAFEGIT_DATABASE_URL='postgres://safegit:safegit_dev_password@127.0.0.1:5432/safegit'</code></pre></div>
             </div>
           </article>
 
@@ -421,29 +422,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./path-to-safegit
+      - uses: agent-cortex/safegit@main
         with:
           database-url: ${{ secrets.SAFEGIT_DATABASE_URL }}
           ref: HEAD</code></pre></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="production">
-      <div class="wrap">
-        <div class="section-head">
-          <div class="kicker">Production posture</div>
-          <h2>What is MVP-complete vs what still needs hardening.</h2>
-        </div>
-        <div class="grid two">
-          <div class="card success">
-            <h3>Already in the MVP</h3>
-            <p>CLI commands, Postgres state, EIP-712 payloads, signature recovery with viem, API endpoints, approval page, Docker Compose, GitHub Action template, and optional live Safe owner/threshold checks.</p>
-          </div>
-          <div class="card warning">
-            <h3>Before serious production use</h3>
-            <p>Add auth and rate limits, real GitHub App check-runs, historical owner-set verification by block, final ERC-1271 encoded-signature path, and proper package publishing.</p>
-          </div>
         </div>
       </div>
     </section>
