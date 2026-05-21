@@ -22,11 +22,16 @@ That is the boring version, and boring is good here.
 
 ## Install
 
+Run install commands from the CLI package directory, the directory with `bin/safegit.js`.
+
 ```bash
 git clone https://github.com/megabyte0x/safegit.git
 cd safegit
 pnpm install
-pnpm link --global
+pnpm safegit -- --help
+pnpm link:global
+hash -r
+safegit --help
 ```
 
 ## Run the backend
@@ -37,6 +42,8 @@ docker compose up --build
 ```
 
 The API defaults to `http://127.0.0.1:8787`.
+
+Local Docker Compose publishes Postgres on `127.0.0.1:15432` by default so it does not collide with an existing machine-level Postgres on `5432`.
 
 ## Next
 

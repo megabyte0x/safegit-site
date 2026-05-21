@@ -10,10 +10,17 @@ description: Environment variables and operational settings.
 Postgres connection string used by the CLI and API.
 
 ```bash
-export SAFEGIT_DATABASE_URL='postgres://safegit:***@127.0.0.1:5432/safegit'
+safegit env
+safegit doctor
 ```
 
+`safegit env` creates `.env` in the current directory with the Docker Compose database URL when `SAFEGIT_DATABASE_URL` is missing. The default host URL is `postgres://safegit:safegit_dev_password@127.0.0.1:15432/safegit`, avoiding collisions with an existing local Postgres on `5432`. `safegit doctor` validates the URL, DNS, and TCP connectivity. Use `safegit env --database-url 'postgres://USER:PASSWORD@HOST:5432/DB'` for a hosted database. Use `safegit env --force` to replace a stale or malformed value in `.env`.
+
 The CLI and server must point at the same database.
+
+### `SAFEGIT_POSTGRES_HOST_PORT`
+
+Host port used by Docker Compose for the local Postgres service. The default is `15432`.
 
 ## Recommended
 

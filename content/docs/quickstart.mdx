@@ -5,6 +5,17 @@ description: The complete happy path from repo to Safe-approved commit.
 
 Use Sepolia while testing. Use your real chain ID and Safe address for production.
 
+Install and link the CLI from the SafeGit package directory, the directory with `bin/safegit.js`:
+
+```bash
+pnpm install
+pnpm safegit -- --help
+pnpm link:global
+hash -r
+```
+
+If `safegit migrate` or `safegit init` fails with `Cannot find module '.../bin/safegit.js'`, the global shim was linked from the wrong directory or an older checkout. Re-run `pnpm link:global` from the CLI package directory. On pnpm 11+, the underlying command is `pnpm link --global .`; the trailing `.` is required.
+
 ## 1. Start Postgres and the API
 
 ```bash
@@ -15,8 +26,11 @@ docker compose up --build
 ## 2. Point the CLI at the database
 
 ```bash
-export SAFEGIT_DATABASE_URL='postgres://safegit:***@127.0.0.1:5432/safegit'
+safegit env
+safegit doctor
 ```
+
+This writes the Docker Compose database URL to `.env` in the current directory only when `SAFEGIT_DATABASE_URL` is missing, then verifies the URL, DNS, and TCP connectivity. The default host URL is `postgres://safegit:safegit_dev_password@127.0.0.1:15432/safegit`, avoiding collisions with an existing local Postgres on `5432`. For a hosted database, run `safegit env --database-url 'postgres://USER:PASSWORD@HOST:5432/DB'`. To replace a stale or malformed `.env` value, run `safegit env --force`.
 
 ## 3. Optional: enable live Safe checks
 
@@ -36,6 +50,7 @@ safegit migrate
 
 ```bash
 cd /path/to/your/repo
+safegit env
 safegit init   --safe 0xYourSafeAddress   --chain-id 11155111   --threshold 2
 ```
 
