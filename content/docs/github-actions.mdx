@@ -12,14 +12,14 @@ name: Safe Verified
 on: [pull_request]
 
 jobs:
-  safe-verified:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: agent-cortex/safegit@main
-        with:
-          database-url: ${{ secrets.SAFEGIT_DATABASE_URL }}
-          ref: HEAD
+    safe-verified:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: megabyte0x/safegit@main
+              with:
+                  database-url: ${{ secrets.SAFEGIT_DATABASE_URL }}
+                  ref: HEAD
 ```
 
 ## Branch protection
